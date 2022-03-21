@@ -1,0 +1,63 @@
+.container {
+    display: block;
+    margin: 20px 0 0 20px;
+    padding: 0 10px;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.filter_status {
+    margin-left: 5px;
+    display: inline-block;
+    border: 1px solid blueviolet;
+    border-radius: 15px;
+    font-size: 12px;
+    width: 80px;
+    text-align: center;
+    background-color: rgba(138, 43, 226, 0.23);
+
+}
+
+.buttons_bar {
+    margin-top: 10px;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+.active {
+   background-color: rgba(113, 146, 224, 0.67);
+}
+
+.button {
+}
+
+.inputBlock {
+    text-align: center;
+    padding: 10px 0 0px 0;
+}
+
+.error {
+    border: 2px solid red;
+}
+
+.tasksContainer {
+    display: grid;
+    grid-template-areas:
+'check title button';
+    grid-template-columns: 2fr 6fr 2fr;
+    padding-bottom: 3px;
+}
+
+.taskCheckBox {
+    grid-area: check;
+    justify-self: center;
+}
+
+.taskTitle {
+    grid-area: title;
+}
+
+.taskDeleteButton {
+    grid-area: button;
+    justify-self: center;
+}
