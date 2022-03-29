@@ -1,12 +1,12 @@
 import {FilterType, TaskType} from "../App";
 import {v1} from "uuid";
 
-// type taskReducerType = {
-//     type: string
-//     payload: any
-// }
+type TaskReducerType = {
+    type: string
+    payload: any
+}
 
-const TasksReducer = (state:TaskType[], action:taskReducerType): TaskType[] => {
+const TasksReducer = (state:Array<TaskType>, action:TaskReducerType): Array<TaskType> => {
     switch (action.type) {
         case 'ADD-TASK': {
             return state
