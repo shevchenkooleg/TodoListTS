@@ -4,7 +4,7 @@ import './App.css';
 import {MyUniversalInput} from "./universalComponent/MyUniversalInput";
 import {MyUniversalButton} from "./universalComponent/MyUniversalButton";
 import {TodoList} from "./TodoList";
-import {addNewArrayAC, addTaskAC, completeTaskAC, removeTaskAC, TasksReducer} from "./reducers/tasksReducer";
+import {addTaskAC, completeTaskAC, removeTaskAC, TasksReducer} from "./reducers/tasksReducer";
 import {changeFilterAC, createTodoListAC, deleteTodoListAC, TodoListsReducer} from "./reducers/todoListsReducer";
 
 
@@ -119,9 +119,9 @@ function App() {
 
     //createTodoList with Reducer
     const createTodoList = () => {
-        const newTodoListID = v1()
-        setTodoLists(TodoListsReducer(todoLists, createTodoListAC(newTodoListID, todoListInputValue)))
-        setTasks(TasksReducer(tasks, addNewArrayAC(newTodoListID)))
+        const action = createTodoListAC(todoListInputValue)
+        setTodoLists(TodoListsReducer(todoLists, action))
+        setTasks(TasksReducer(tasks, action))
         setTodoListInputValue('')
     }
 
@@ -134,7 +134,7 @@ function App() {
     //deleteTodoList with Reducer
     const deleteTodoList = (todolistID: string) => {
         setTodoLists(TodoListsReducer(todoLists, deleteTodoListAC(todolistID)))
-        delete tasks[todolistID]
+        setTasks(TasksReducer(tasks, deleteTodoListAC(todolistID)))
     }
 
     //changeFilter with Function
