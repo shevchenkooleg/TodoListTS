@@ -125,8 +125,13 @@ function App() {
     //createTodoList with Reducer
     const createTodoList = () => {
         const action = createTodoListAC(todoListInputValue)
+<<<<<<< HEAD
         dispatchTasks(action)
         dispatchTodoLists(action)
+=======
+        setTodoLists(TodoListsReducer(todoLists, action))
+        setTasks(TasksReducer(tasks, action))
+>>>>>>> f0abe19 (making some refactoring with reducers, wich touch bouth state-object)
         setTodoListInputValue('')
     }
 
@@ -138,8 +143,13 @@ function App() {
 
     //deleteTodoList with Reducer
     const deleteTodoList = (todolistID: string) => {
+<<<<<<< HEAD
         dispatchTodoLists(deleteTodoListAC(todolistID))
         dispatchTasks(deleteTodoListAC(todolistID))
+=======
+        setTodoLists(TodoListsReducer(todoLists, deleteTodoListAC(todolistID)))
+        setTasks(TasksReducer(tasks, deleteTodoListAC(todolistID)))
+>>>>>>> f0abe19 (making some refactoring with reducers, wich touch bouth state-object)
     }
 
     //changeFilter with Function
