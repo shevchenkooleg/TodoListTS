@@ -28,11 +28,16 @@ function App() {
     const todolistID1: string = v1()
     const todolistID2: string = v1()
 
-    let [todoLists, setTodoLists] = useState<Array<TodoListType>>([
+    // let [todoLists, setTodoLists] = useState<Array<TodoListType>>([
+    //     {id: todolistID1, title: 'What to learn', filter: 'all'},
+    //     {id: todolistID2, title: 'What to buy', filter: 'active'}
+    // ])
+    let [todoLists, dispatchTodoLists] = useReducer(TodoListsReducer, [
         {id: todolistID1, title: 'What to learn', filter: 'all'},
         {id: todolistID2, title: 'What to buy', filter: 'active'}
     ])
-    let [tasks, setTasks] = useState<TasksType>({
+
+    let [tasks, dispatchTasks] = useReducer(TasksReducer, {
         [todolistID1]: [
             {id: v1(), title: "HTML&CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true},
@@ -85,7 +90,7 @@ function App() {
 
     //addTask with Reducer
     const addTask = (todolistID: string, title: string) => {
-        setTasks(TasksReducer(tasks, addTaskAC(todolistID, title)))
+        dispatchTasks(addTaskAC(todolistID, title))
     }
 
     //removeTask with Function
@@ -95,7 +100,7 @@ function App() {
 
     //removeTask with Reducer
     const removeTask = (todolistID: string, taskID: string) => {
-        setTasks(TasksReducer(tasks, removeTaskAC(todolistID, taskID)))
+        dispatchTasks(removeTaskAC(todolistID, taskID))
     }
 
     //completeTask with Function
@@ -105,7 +110,7 @@ function App() {
 
     //completeTask with Reducer
     const completeTask = (todolistID: string, taskID: string, isDone: boolean) => {
-        setTasks(TasksReducer(tasks, completeTaskAC(todolistID, taskID, isDone)))
+        dispatchTasks(completeTaskAC(todolistID, taskID, isDone))
     }
 
     //createTodoList with Function
@@ -120,8 +125,8 @@ function App() {
     //createTodoList with Reducer
     const createTodoList = () => {
         const action = createTodoListAC(todoListInputValue)
-        setTodoLists(TodoListsReducer(todoLists, action))
-        setTasks(TasksReducer(tasks, action))
+        dispatchTasks(action)
+        dispatchTodoLists(action)
         setTodoListInputValue('')
     }
 
@@ -133,8 +138,8 @@ function App() {
 
     //deleteTodoList with Reducer
     const deleteTodoList = (todolistID: string) => {
-        setTodoLists(TodoListsReducer(todoLists, deleteTodoListAC(todolistID)))
-        setTasks(TasksReducer(tasks, deleteTodoListAC(todolistID)))
+        dispatchTodoLists(deleteTodoListAC(todolistID))
+        dispatchTasks(deleteTodoListAC(todolistID))
     }
 
     //changeFilter with Function
@@ -144,7 +149,7 @@ function App() {
 
     //changeFilter with Reducer
     const changeFilter = (todolistID: string, filter: FilterType) => {
-        setTodoLists(TodoListsReducer(todoLists, changeFilterAC(todolistID, filter)))
+        dispatchTodoLists(changeFilterAC(todolistID, filter))
     }
 
 
