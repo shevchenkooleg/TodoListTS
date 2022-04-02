@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useReducer, useState} from 'react';
 import {v1} from 'uuid';
 import './App.css';
 import {MyUniversalInput} from "./universalComponent/MyUniversalInput";
@@ -140,6 +140,7 @@ function App() {
     const deleteTodoList = (todolistID: string) => {
         dispatchTodoLists(deleteTodoListAC(todolistID))
         dispatchTasks(deleteTodoListAC(todolistID))
+    }
 
     //changeFilter with Function
     // const changeFilter = (todolistID: string, filter: FilterType) => {
