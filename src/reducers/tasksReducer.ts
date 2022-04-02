@@ -18,10 +18,8 @@ export const TasksReducer = (state:TasksType, action:TaskReducerType): TasksType
             return {...state, [action.payload.newTodoListID]:[]}
         }
         case 'DELETE-TODOLIST': {
-            console.log(state)
             let newState = {...state}
             delete newState[action.payload.todolistID]
-            console.log(newState)
             return newState
         }
         default: {

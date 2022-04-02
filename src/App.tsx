@@ -5,7 +5,13 @@ import {MyUniversalInput} from "./universalComponent/MyUniversalInput";
 import {MyUniversalButton} from "./universalComponent/MyUniversalButton";
 import {TodoList} from "./TodoList";
 import {addTaskAC, completeTaskAC, removeTaskAC, TasksReducer} from "./reducers/tasksReducer";
-import {changeFilterAC, createTodoListAC, deleteTodoListAC, TodoListsReducer} from "./reducers/todoListsReducer";
+import {
+    changeFilterAC,
+    changeTodoListTitleAC,
+    createTodoListAC,
+    deleteTodoListAC,
+    TodoListsReducer
+} from "./reducers/todoListsReducer";
 
 
 export type FilterType = 'active' | 'completed' | 'all'
@@ -50,7 +56,10 @@ function App() {
         ]
     })
 
-    let [todoListInputValue, setTodoListInputValue] = useState('')
+    let [todoListInputValue, setTodoListInputValue] = useState<string>('')
+    let [todoListInputError, setTodoListInputError] = useState<boolean>(false)
+
+    //todo need to implement ability to change task title
 
     const addTask = (todolistID: string, title: string) => {
         dispatchTasks(addTaskAC(todolistID, title))
@@ -65,10 +74,19 @@ function App() {
     }
 
     const createTodoList = () => {
-        const action = createTodoListAC(todoListInputValue)
-        dispatchTasks(action)
-        dispatchTodoLists(action)
-        setTodoListInputValue('')
+        if (todoListInputValue) {
+            setTodoListInputError(false)
+            const action = createTodoListAC(todoListInputValue)
+            dispatchTasks(action)
+            dispatchTodoLists(action)
+            setTodoListInputValue('')
+        } else {
+            setTodoListInputError(true)
+        }
+    }
+
+    const changeTodoListTitle = (todolistID: string, newTitle:string) => {
+        dispatchTodoLists(changeTodoListTitleAC(todolistID, newTitle))
     }
 
     const deleteTodoList = (todolistID: string) => {
@@ -84,9 +102,9 @@ function App() {
     return (
         <div className='App'>
 
-            <MyUniversalInput value={todoListInputValue} onEnter={createTodoList} callback={(e) => {
+            <MyUniversalInput placeholder={'Input TodoList title'} value={todoListInputValue} onEnter={createTodoList} callback={(e) => {
                 setTodoListInputValue(e.currentTarget.value)
-            }}/>
+            }} red={todoListInputError}/>
             <MyUniversalButton title={'Add TodoList'} callback={createTodoList}/>
             <div className='container'>
                 {todoLists.map(el => {
@@ -117,6 +135,7 @@ function App() {
                             filter={el.filter}
                             completeTask={completeTask}
                             deleteTodoList={deleteTodoList}
+                            changeTodoListTitle={changeTodoListTitle}
                         />
                     )
 

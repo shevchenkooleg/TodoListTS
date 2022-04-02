@@ -8,6 +8,8 @@ type MyUniversalInputPropsType = DefaultInputPropsType & {
     callback: (e: ChangeEvent<HTMLInputElement>) => void
     onEnter?: () => void
     red?: boolean
+    placeholder?: string
+    edit?: ()=>void
 }
 
 export const MyUniversalInput = (props: MyUniversalInputPropsType) => {
@@ -22,6 +24,7 @@ export const MyUniversalInput = (props: MyUniversalInputPropsType) => {
     }
 
     return (
-        <input placeholder={'Input task title'} className={resultInputClassName()} value={props.value} onChange={props.callback} onKeyPress={onKeyPressCallback}/>
+        <input autoFocus={props.edit?true:false} placeholder={props.placeholder} className={resultInputClassName()}
+               value={props.value} onChange={props.callback} onKeyPress={onKeyPressCallback} onBlur={props.edit}/>
     );
 };

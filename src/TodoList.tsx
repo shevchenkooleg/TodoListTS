@@ -3,6 +3,7 @@ import {MyUniversalButton} from "./universalComponent/MyUniversalButton";
 import {FilterType, TaskType} from "./App";
 import {MyUniversalInput} from "./universalComponent/MyUniversalInput";
 import s from './TodoList.module.css'
+import EditableSpan from "./universalComponent/EditableSpan";
 
 type TodoListPropsType = {
     title: string
@@ -13,6 +14,7 @@ type TodoListPropsType = {
     changeFilter: (todolistID: string, filter: FilterType) => void
     completeTask: (todolistID: string, taskID: string, isDone: boolean) => void
     deleteTodoList: (todolistID: string) => void
+    changeTodoListTitle: (todolistID:string, todoListTitleValue:string)=> void
     filter: FilterType
 
 }
@@ -57,12 +59,13 @@ export const TodoList = (props: TodoListPropsType) => {
         <div className={s.container}>
             <h3>
                 <div>
-                    {props.title}
+                    <EditableSpan title={props.title} changeTodoListTitle={props.changeTodoListTitle} todolistID={props.todolistID}/>
+
                     <MyUniversalButton callback={onDeleteTodoListButtonHandler} title={'x'}/>
                     <span className={s.filter_status}>{props.filter}</span>
                 </div>
                 <div className={s.inputBlock}>
-                    <MyUniversalInput value={inputValue} callback={onInputChangeHandler}
+                    <MyUniversalInput placeholder={'Input task title'} value={inputValue} callback={onInputChangeHandler}
                                       onEnter={onPressAddTaskButtonHandler} red={error}/>
                     <MyUniversalButton title={'+'} callback={onPressAddTaskButtonHandler}/>
                 </div>
