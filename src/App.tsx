@@ -4,7 +4,7 @@ import './App.css';
 import {MyUniversalInput} from "./universalComponent/MyUniversalInput";
 import {MyUniversalButton} from "./universalComponent/MyUniversalButton";
 import {TodoList} from "./TodoList";
-import {addTaskAC, completeTaskAC, removeTaskAC, TasksReducer} from "./reducers/tasksReducer";
+import {addTaskAC, changeTaskTitleAC, completeTaskAC, removeTaskAC, TasksReducer} from "./reducers/tasksReducer";
 import {
     changeFilterAC,
     changeTodoListTitleAC,
@@ -59,8 +59,6 @@ function App() {
     let [todoListInputValue, setTodoListInputValue] = useState<string>('')
     let [todoListInputError, setTodoListInputError] = useState<boolean>(false)
 
-    //todo need to implement ability to change task title
-
     const addTask = (todolistID: string, title: string) => {
         dispatchTasks(addTaskAC(todolistID, title))
     }
@@ -71,6 +69,9 @@ function App() {
 
     const completeTask = (todolistID: string, taskID: string, isDone: boolean) => {
         dispatchTasks(completeTaskAC(todolistID, taskID, isDone))
+    }
+    const changeTaskTitle = (todolistID: string, taskID: string, newTitle:string) => {
+        dispatchTasks(changeTaskTitleAC(todolistID, taskID, newTitle))
     }
 
     const createTodoList = () => {
@@ -136,6 +137,8 @@ function App() {
                             completeTask={completeTask}
                             deleteTodoList={deleteTodoList}
                             changeTodoListTitle={changeTodoListTitle}
+                            changeTaskTitle={changeTaskTitle}
+
                         />
                     )
 

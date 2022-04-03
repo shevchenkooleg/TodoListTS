@@ -14,7 +14,8 @@ type TodoListPropsType = {
     changeFilter: (todolistID: string, filter: FilterType) => void
     completeTask: (todolistID: string, taskID: string, isDone: boolean) => void
     deleteTodoList: (todolistID: string) => void
-    changeTodoListTitle: (todolistID:string, todoListTitleValue:string)=> void
+    changeTodoListTitle: (todolistID:string, newTitle:string)=> void
+    changeTaskTitle: (todolistID:string, taskID: string, newTitle:string) => void
     filter: FilterType
 
 }
@@ -52,6 +53,12 @@ export const TodoList = (props: TodoListPropsType) => {
         props.deleteTodoList(props.todolistID)
     }
 
+    const onChangeTodoListTitleHandler = (newTitle:string) => {
+        props.changeTodoListTitle(props.todolistID, newTitle)
+    }
+
+
+
 
 
 
@@ -59,7 +66,7 @@ export const TodoList = (props: TodoListPropsType) => {
         <div className={s.container}>
             <h3>
                 <div>
-                    <EditableSpan title={props.title} changeTodoListTitle={props.changeTodoListTitle} todolistID={props.todolistID}/>
+                    <EditableSpan title={props.title} callback={onChangeTodoListTitleHandler}/>
 
                     <MyUniversalButton callback={onDeleteTodoListButtonHandler} title={'x'}/>
                     <span className={s.filter_status}>{props.filter}</span>
@@ -78,6 +85,10 @@ export const TodoList = (props: TodoListPropsType) => {
                         props.removeTask(props.todolistID, t.id)
                     }
 
+                    const onChangeTaskTitleHandler = (newTitle:string) => {
+                        props.changeTaskTitle(props.todolistID, t.id, newTitle)
+                    }
+
 
                     return (
 
@@ -87,7 +98,8 @@ export const TodoList = (props: TodoListPropsType) => {
                                 <input  type="checkbox" checked={t.isDone}
                                         onChange={(e) => onCheckBoxHandler(t.id, e.currentTarget.checked)}/>
                             </div>
-                            <div className={s.taskTitle}>{t.title}</div>
+                            <EditableSpan className={s.taskTitle} title={t.title} callback={onChangeTaskTitleHandler}/>
+                            {/*<div className={s.taskTitle}>{t.title}</div>*/}
                             <div className={s.taskDeleteButton}>
                                 <MyUniversalButton title={'X'} callback={onPressRemoveTaskButtonHandler}/>
                             </div>

@@ -3,12 +3,12 @@ import {MyUniversalInput} from "./MyUniversalInput";
 
 type EditableSpanPropsType = {
     title:string
-    todolistID:string
-    changeTodoListTitle: (todolistID:string, todoListTitleValue:string)=> void
+    className?:string
+    callback: (newTitle:string)=> void
 }
 
 const EditableSpan = (props:EditableSpanPropsType) => {
-    let [todoListTitleValue, setTodoListTitleValue] = useState(props.title)
+    let [title, setTitle] = useState(props.title)
     let [editMode, setEditMode] = useState<boolean>(false)
 
     const activateEditMode = () => {
@@ -16,17 +16,17 @@ const EditableSpan = (props:EditableSpanPropsType) => {
     }
 
     const activateViewMode = () => {
-        props.changeTodoListTitle(props.todolistID, todoListTitleValue)
+        props.callback(title)
         setEditMode(false)
     }
 
     return !editMode ? (
-        <span onDoubleClick={activateEditMode}>
+        <span className={props.className} onDoubleClick={activateEditMode}>
             {props.title}
         </span> )
         : (
-            <MyUniversalInput autoFocus onBlur={activateViewMode} edit={activateViewMode} value={todoListTitleValue}
-                              callback={(e)=>setTodoListTitleValue(e.currentTarget.value)}/>
+            <MyUniversalInput autoFocus onBlur={activateViewMode} edit={activateViewMode} value={title}
+                              callback={(e)=>setTitle(e.currentTarget.value)}/>
         )
     ;
 };
